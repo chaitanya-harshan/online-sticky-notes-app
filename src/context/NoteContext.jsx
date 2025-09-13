@@ -11,9 +11,22 @@ export const NoteProvider = ({ children }) => {
 
   useEffect(() => {init()}, []);
   
+  // const init = async () => {
+  //   const response = await db.notes.list();
+  //   setNotes(response.documents);
+  //   setLoading(false);
+  // };
   const init = async () => {
-    const response = await db.notes.list();
-    setNotes(response.documents);
+    console.log("VITE_ENDPOINT:", import.meta.env.VITE_ENDPOINT);
+    console.log("VITE_PROJECT_ID:", import.meta.env.VITE_PROJECT_ID);
+    console.log("VITE_DATABASE_ID:", import.meta.env.VITE_DATABASE_ID);
+    console.log("VITE_COLLECTION_NOTES_ID:", import.meta.env.VITE_COLLECTION_NOTES_ID);
+    try {
+      const response = await db.notes.list();
+      setNotes(response.documents);
+    } catch (error) {
+      console.error("Error fetching notes:", error);
+    }
     setLoading(false);
   };
 
